@@ -1,0 +1,10 @@
+name: My CI
+
+on: [push, pull_request]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: No operation
+        run: echo "This workflow does nothing."
