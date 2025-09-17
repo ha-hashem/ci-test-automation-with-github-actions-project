@@ -11,8 +11,6 @@ load_dotenv()
 
 GOLD_API_URL = "https://www.goldapi.io/api"
 GOLD_API_KEY = os.environ.get("GOLD_API_KEY")
-if not GOLD_API_KEY:
-    raise ValueError("GOLD_API_KEY environment variable not set")
 
 headers = {"x-access-token": GOLD_API_KEY, "Content-Type": "application/json"}
 
