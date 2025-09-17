@@ -18,3 +18,8 @@ your-project/
 ├── requirements.txt
 ├── README.md
 └── pytest.ini
+
+todo:
+- handle secrets
+- venv setup
+- pytest
