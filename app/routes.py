@@ -1,13 +1,19 @@
-from app.helpers import convert_gold_price_to_grams, convert_USD_to_BHD
-
-from fastapi import APIRouter, HTTPException, Query
-from config.environment import GOLD_API_KEY
-
+import os
 import httpx
 
+from app.helpers import convert_gold_price_to_grams, convert_USD_to_BHD
+from fastapi import APIRouter, HTTPException, Query
+# from config.environment import GOLD_API_KEY
+from dotenv import load_dotenv
+
 router = APIRouter()
+load_dotenv()
 
 GOLD_API_URL = "https://www.goldapi.io/api"
+GOLD_API_KEY = os.environ.get("GOLD_API_KEY")
+if not GOLD_API_KEY:
+    raise ValueError("GOLD_API_KEY environment variable not set")
+
 headers = {"x-access-token": GOLD_API_KEY, "Content-Type": "application/json"}
 
 @router.get("/")
@@ -72,7 +78,7 @@ async def convert_gold_to_currency(amount_grams: float):
     '''
     if amount_grams <= 0:
         raise HTTPException(status_code=400, detail="Amount in grams must be positive")
-        
+
     # Get price per ounce in given currency
     async with httpx.AsyncClient() as client:
         resp = await client.get(f"{GOLD_API_URL}/XAU/USD", headers=headers)
