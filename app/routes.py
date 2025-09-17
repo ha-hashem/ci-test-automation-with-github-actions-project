@@ -70,7 +70,9 @@ async def convert_gold_to_currency(amount_grams: float):
     '''
     Convert a specified amount of gold (in grams) to a given currency.
     '''
-
+    if amount_grams <= 0:
+        raise HTTPException(status_code=400, detail="Amount in grams must be positive")
+        
     # Get price per ounce in given currency
     async with httpx.AsyncClient() as client:
         resp = await client.get(f"{GOLD_API_URL}/XAU/USD", headers=headers)
