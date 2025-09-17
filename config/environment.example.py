@@ -1,1 +1,1 @@
-GOLD_API_KEY = "goldapi-demo-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"  # Replace with your API key
+GOLD_API_KEY = "goldapi-xxxxxxxxxxxxxxxx-io"  # Replace with your API key

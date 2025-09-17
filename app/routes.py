@@ -31,7 +31,7 @@ async def get_current_gold_price():
         price = convert_USD_to_BHD(price)
 
         return {
-            "price_usd_per_ounce": price,
+            "price_bhd_per_gram": price,
             "currency": "BHD",
             "unit": "gram",
             "carat": 24
@@ -50,33 +50,50 @@ async def get_historical_gold_price(date: str = Query(..., regex="^\d{8}$")):
         if resp.status_code != 200:
             raise HTTPException(status_code=resp.status_code, detail="Failed to fetch historical gold price")
         data = resp.json()
-        price = convert_gold_price_to_grams(data.get("price"))
+        price = data.get("price")
+
+        # Covert price from USD/ounce to BHD/gram
+        price = convert_gold_price_to_grams(price)
+        price = convert_USD_to_BHD(price)
+
         return {
             "date": date,
-            "price_usd_per_ounce": price,
-            "currency": "USD",
-            "unit": "ounce"
+            "price_bhd_per_gram": price,
+            "currency": "BHD",
+            "unit": "gram",
+            "carat": 24
         }
 
 
 @router.get("/convert")
-async def convert_gold_to_currency(amount_ounces: float, currency: str = "USD"):
+async def convert_gold_to_currency(amount_grams: float):
     '''
-    Convert a specified amount of gold (in ounces) to a given currency.
-    Default currency is USD.
-    Example: /convert?amount_ounces=2.5&currency=EUR
+    Convert a specified amount of gold (in grams) to a given currency.
     '''
+
+    # Get price per ounce in given currency
     async with httpx.AsyncClient() as client:
-        resp = await client.get(f"{GOLD_API_URL}/XAU/{currency.upper()}", headers=headers)
+        resp = await client.get(f"{GOLD_API_URL}/XAU/USD", headers=headers)
+        
         if resp.status_code != 200:
-            raise HTTPException(status_code=resp.status_code, detail="Failed to fetch conversion rate")
+            raise HTTPException(status_code=resp.status_code, detail="Failed to fetch gold price")
+        
         data = resp.json()
         price_per_ounce = data.get("price")
+
         if price_per_ounce is None:
             raise HTTPException(status_code=500, detail="Price not available")
-        total = amount_ounces * price_per_ounce
+
+        # Convert price per ounce to price per gram, then to BHD
+        price_per_gram = convert_gold_price_to_grams(price_per_ounce)
+        price_per_gram = convert_USD_to_BHD(price_per_gram)
+
+        total_value = amount_grams * price_per_gram
+        
         return {
-            "amount_ounces": amount_ounces,
-            "currency": currency.upper(),
-            "total_value": total
+            "amount_grams": amount_grams,
+            "currency": "BHD",
+            "total_value": total_value,
+            "unit": "gram",
+            "carat": 24
         }
