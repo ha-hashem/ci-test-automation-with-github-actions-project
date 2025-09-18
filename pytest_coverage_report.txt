@@ -1,0 +1,26 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.4.2, pluggy-1.6.0
+rootdir: /home/user/code/ga/projects/ci-test-automation-with-github-actions-project
+configfile: pytest.ini
+plugins: anyio-4.10.0, cov-7.0.0
+collected 10 items
+
+tests/test_helpers.py ....                                               [ 40%]
+tests/test_routes.py ......                                              [100%]
+
+==================================== PASSES ====================================
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.3-final-0 ________________
+
+Name                    Stmts   Miss  Cover
+-------------------------------------------
+app/__init__.py             0      0   100%
+app/helpers.py             10      0   100%
+app/main.py                14      1    93%
+app/routes.py              52      5    90%
+tests/conftest.py          11      2    82%
+tests/test_helpers.py      22      0   100%
+tests/test_routes.py       45      0   100%
+-------------------------------------------
+TOTAL                     154      8    95%
+============================== 10 passed in 2.68s ==============================

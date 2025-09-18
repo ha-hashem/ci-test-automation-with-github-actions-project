@@ -43,7 +43,7 @@ async def get_current_gold_price():
 
 
 @router.get("/history")
-async def get_historical_gold_price(date: str = Query(..., regex="^\d{8}$")):
+async def get_historical_gold_price(date: str = Query(..., regex=r"^\d{8}$")):
     """
     Get historical gold price for a specific date.
     Date format: YYYYMMDD (e.g., 20250909)
