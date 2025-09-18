@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  prom:
+    image: prom/prometheus
+    container_name: myns_prom
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana-oss
+    container_name: myns_grafana
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
