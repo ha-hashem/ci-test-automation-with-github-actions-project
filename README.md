@@ -1,5 +1,8 @@
 # Gold Price API Application
 
+![Build Status](https://github.com/ha-hashem/ci-test-automation-with-github-actions-project/actions/workflows/test.yml/badge.svg)
+![Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen)
+
 ## Description
 This application provides a FastAPI-based REST API for retrieving gold price data and currency conversion, with automated testing and monitoring. It is designed for CI/CD pipelines using GitHub Actions and includes integrations for Prometheus and Grafana monitoring.
 
