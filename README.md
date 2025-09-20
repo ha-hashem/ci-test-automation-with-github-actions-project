@@ -39,7 +39,7 @@ pip install -r requirements.txt
 
 #### GitHub Actions
 - In your GitHub repository, go to **Settings > Secrets and variables > Actions**.
-- Add a new secret named `GOLD_API_KEY` and paste your API key as the value.
+- Add a new secret named `API_KEY` and paste your API key as the value.
 
 ![CI Test Passing Screenshot](./assets/test-success.png)
 
